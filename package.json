@@ -18,7 +18,7 @@
     "testdata": "node lib/testdata.js",
     "test": "ava",
     "dev": " pm2-dev start app.js",
-    "copy": "cp -R -L  ./node_modules ./app ./*.json ./config ./logger ./test ./kubernetes $npm_package_config_build",
+    "copy": "cp -R -L  ./node_modules ./bin ./*.json ./config ./lib ./locales ./public ./routes ./test ./views $npm_package_config_build",
     "build": "npm run clean",
     "prepackage": "echo Packaging $npm_package_config_service v\"$npm_package_version\" service",
     "package": "npm run build && npm run copy",
