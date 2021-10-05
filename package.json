@@ -3,12 +3,26 @@
   "version": "1.1.19",
   "description": "A fully functioning Node.js shopping cart with Stripe, PayPal and Authorize.net payments.",
   "private": false,
+  "config": {
+    "service": "ExpressCart",
+    "service_short": "expresscart",
+    "distribution": "./distribution",
+    "build": "./distribution/build"
+  },
   "scripts": {
     "start": "node app.js",
     "deploy": "node deploy.js",
+    "clean:build": "node_modules/.bin/rimraf $npm_package_config_distribution",
+    "create:build": "node_modules/.bin/mkdirp $npm_package_config_build",
+    "clean": "npm run create:build && rimraf npm-debug.log",
     "testdata": "node lib/testdata.js",
     "test": "ava",
     "dev": " pm2-dev start app.js",
+    "copy": "cp -R -L  ./node_modules ./app ./*.json ./config ./logger ./test ./kubernetes $npm_package_config_build",
+    "build": "npm run clean",
+    "prepackage": "echo Packaging $npm_package_config_service v\"$npm_package_version\" service",
+    "package": "npm run build && npm run copy",
+    "postpackage": "cd $npm_package_config_build && zip -r ../$npm_package_config_service_short-\"$npm_package_version\".zip . && cd ../.. && node_modules/.bin/rimraf $npm_package_config_build",
     "lint": "eslint ./"
   },
   "ava": {
